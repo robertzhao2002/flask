@@ -95,8 +95,7 @@ def stream_with_context(
         return update_wrapper(decorator, generator_or_function)  # type: ignore
 
     def generator() -> t.Generator:
-        ctx = _cv_request.get(None)
-        if ctx is None:
+        if (ctx := _cv_request.get(None)) is None:
             raise RuntimeError(
                 "'stream_with_context' can only be used when a request"
                 " context is active, such as in a view function."
@@ -362,8 +361,7 @@ def get_flashed_messages(
     :param category_filter: filter of categories to limit return values.  Only
                             categories in the list will be returned.
     """
-    flashes = request_ctx.flashes
-    if flashes is None:
+    if (flashes := request_ctx.flashes) is None:
         flashes = session.pop("_flashes") if "_flashes" in session else []
         request_ctx.flashes = flashes
     if category_filter:
@@ -572,9 +570,8 @@ def get_root_path(import_name: str) -> str:
 
     # Next attempt: check the loader.
     try:
-        spec = importlib.util.find_spec(import_name)
 
-        if spec is None:
+        if (spec := importlib.util.find_spec(import_name)) is None:
             raise ValueError
     except (ImportError, ValueError):
         loader = None
