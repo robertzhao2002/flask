@@ -1166,7 +1166,7 @@ class Flask(App):
 
         # make sure the body is an instance of the response class
         if not isinstance(rv, self.response_class):
-            if isinstance(rv, (str, bytes, bytearray)) or isinstance(rv, _abc_Iterator):
+            if isinstance(rv, (str, bytes, bytearray, _abc_Iterator)):
                 # let the response class set the status and headers instead of
                 # waiting to do it manually, so that the class can handle any
                 # special logic
